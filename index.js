@@ -4,7 +4,7 @@ const cheerio = require('cheerio')
 const items = require('./items.json')
 const chalk = require('chalk')
 chalk.level = 1
-
+let counter = 0
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
@@ -22,12 +22,14 @@ someFunction()
 
         if (name.includes(toSeach)) {
           console.log(
-            chalk.red(`Znaleziono:`),
+            chalk.red(`Wyszukano [${++counter}]:`),
             chalk.blue(`https://morele.net${urlToItem}`),
           )
         }
       })
     })
+
+    console.log(chalk.red(`Znaleziono:`), chalk.cyan(`${counter} linków`))
   })
   .catch((err) => {
     console.log(err)
@@ -37,9 +39,12 @@ async function someFunction() {
   let promises = []
   for (let i = 0; i < items.length; i++) {
     promises.push(axios.get(items[i]))
-    console.log(chalk.red('Pobieranie:'), chalk.green(`${items[i]}...`))
+    console.log(
+      chalk.red(`Pobieranie [${i + 1} z ${items.length}]:`),
+      chalk.green(`${items[i]}...`),
+    )
     //wait 600ms to avoid rate limit. You can try to shorten this time
-    await sleep(15)
+    await sleep(35)
   }
   return Promise.all(promises)
 }
