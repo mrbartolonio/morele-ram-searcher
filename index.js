@@ -39,7 +39,7 @@ async function someFunction() {
     promises.push(axios.get(items[i]))
     console.log(chalk.red('Pobieranie:'), chalk.green(`${items[i]}...`))
     //wait 600ms to avoid rate limit. You can try to shorten this time
-    await sleep(600)
+    await sleep(15)
   }
   return Promise.all(promises)
 }
